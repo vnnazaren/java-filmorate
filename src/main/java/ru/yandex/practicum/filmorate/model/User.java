@@ -15,8 +15,6 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class User {
-    private static int lastId = 0;
-
     private int id;
     @Email(message = "Email cannot be empty and must contain the @ symbol")
     private String email;
@@ -26,8 +24,4 @@ public class User {
     private String name;
     @PastOrPresent(message = "The date of birth cannot be in the future")
     private LocalDate birthday;
-
-    public int generateId() {
-        return ++lastId;
-    }
 }

@@ -13,16 +13,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private static int lastId = 0;
     protected final List<User> list = new ArrayList<>();
 
     @PostMapping
     public User create(@Valid @RequestBody User user) {
-        if (user.getName() == null) {
-            log.warn("Имя пустое - будет использован логин");
-            user.setName(user.getLogin());
-        }
+        setNameByLogin(user);
 
-        user.setId(user.generateId());
+        user.setId(generateId());
         list.add(user);
         log.debug("Проверки пройдены, пользователь создан");
         return user;
@@ -30,6 +28,8 @@ public class UserController {
 
     @PutMapping
     public User update(@Valid @RequestBody User user) throws ValidationException {
+        setNameByLogin(user);
+
         boolean isUserExist = false;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId() == user.getId()) {
@@ -46,5 +46,16 @@ public class UserController {
     @GetMapping
     public List<User> read() {
         return list;
+    }
+
+    private int generateId() {
+        return ++lastId;
+    }
+
+    private void setNameByLogin(User user) {
+        if (user.getName() == null) {
+            log.warn("Имя пустое - будет использован логин");
+            user.setName(user.getLogin());
+        }
     }
 }

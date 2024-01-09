@@ -15,8 +15,6 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class Film {
-    private static int lastId = 0;
-
     private int id;
     @NotNull(message = "The name cannot be empty")
     @NotBlank(message = "The name cannot be empty")
@@ -27,8 +25,4 @@ public class Film {
     private LocalDate releaseDate;
     @Positive(message = "The length of the film must be positive")
     private int duration;
-
-    public int generateId() {
-        return ++lastId;
-    }
 }

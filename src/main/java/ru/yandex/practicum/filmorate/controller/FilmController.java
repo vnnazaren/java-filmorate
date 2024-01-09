@@ -14,16 +14,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
+    private static int lastId = 0;
     protected final List<Film> list = new ArrayList<>();
 
     @PostMapping
     public Film create(@Valid @RequestBody Film film) throws ValidationException {
-        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
-            log.error("Дата релиза — не раньше 28 декабря 1895 года");
-            throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");
-        }
+        checkFilmReleaseDate(film);
 
-        film.setId(film.generateId());
+        film.setId(generateId());
         list.add(film);
         log.debug("Проверки пройдены, фильм создан");
         return film;
@@ -31,15 +29,17 @@ public class FilmController {
 
     @PutMapping
     public Film update(@Valid @RequestBody Film film) throws ValidationException {
-        boolean isUserExist = false;
+        checkFilmReleaseDate(film);
+
+        boolean isFilmExist = false;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId() == film.getId()) {
                 list.set(i, film);
-                isUserExist = true;
+                isFilmExist = true;
             }
         }
 
-        if (!isUserExist) throw new ValidationException("Нет фильма с ID " + film.getId());
+        if (!isFilmExist) throw new ValidationException("Нет фильма с ID " + film.getId());
 
         return film;
     }
@@ -47,5 +47,16 @@ public class FilmController {
     @GetMapping
     public List<Film> read() {
         return list;
+    }
+
+    private int generateId() {
+        return ++lastId;
+    }
+
+    private void checkFilmReleaseDate(Film film) throws ValidationException {
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
+            log.error("Дата релиза — не раньше 28 декабря 1895 года");
+            throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года");
+        }
     }
 }
