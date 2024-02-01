@@ -39,7 +39,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handle(final Throwable e) {
+    public ErrorResponse handle(final Throwable ignored) {
         return new ErrorResponse("Произошла непредвиденная ошибка.");
     }
 }

@@ -44,26 +44,6 @@ public class UserService {
         friend.getFriends().add(userId);
     }
 
-//    public Set<User> getUserFriends(int userId) {
-//
-//        Set<Integer> ids = userStorage.getUserById(userId).getFriends();
-//        List<User> users = userStorage.getUsers();
-//
-//        List<User> qwerty = ids.stream()
-//                .map(id -> users.stream()
-//                        .filter(user -> id.equals(user.getId()))
-//                        .findAny()
-//                        .orElseThrow(() -> new UserNotFoundException(
-//                                String.format("Пользователь c id - %s не найден", userId))))
-//                .collect(Collectors.toList());
-//
-//        SortedSet<User> sortedSet = new TreeSet<>((u1, u2) -> Integer.compare(u1.getId(), u2.getId()));
-//        sortedSet.addAll(qwerty);
-//
-//        return sortedSet;
-//    }
-
-
     public Set<User> getUserFriends(int userId) {
 
         Set<Integer> ids = userStorage.getUserById(userId).getFriends();

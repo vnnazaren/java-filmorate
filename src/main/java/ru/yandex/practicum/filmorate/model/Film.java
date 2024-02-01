@@ -21,7 +21,7 @@ public class Film {
     @NotNull(message = "The name cannot be empty")
     @NotBlank(message = "The name cannot be empty")
     private String name;
-    @Size(min = 0, max = 200, message = "The maximum description length is 200 characters")
+    @Size(min = 1, max = 200, message = "The maximum description length is 200 characters")
     private String description;
     // дата релиза — не раньше 28 декабря 1895 года - проверка реализована в контроллере
     private LocalDate releaseDate;

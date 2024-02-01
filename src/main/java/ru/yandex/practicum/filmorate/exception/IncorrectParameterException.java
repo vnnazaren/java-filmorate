@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class IncorrectParameterException extends RuntimeException{
+public class IncorrectParameterException extends RuntimeException {
     private final String parameter;
 }
