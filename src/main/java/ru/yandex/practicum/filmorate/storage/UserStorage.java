@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface UserStorage {
 
-    public User create(User user);
+    User createUser(User user);
 
-    public User update(User user) throws ValidationException;
+    User updateUser(User user);
 
-    public List<User> read();
+    List<User> getUsers();
+
+    User getUserById(int id);
 
 }

@@ -2,6 +2,7 @@ package ru.yandex.practicum.filmorate.storage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import ru.yandex.practicum.filmorate.exception.UserNotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -11,10 +12,10 @@ import java.util.List;
 @Slf4j
 @Component
 public class InMemoryUserStorage implements UserStorage {
-    private static int lastId = 0;
+    private static int lastId = 1;
     protected final List<User> list = new ArrayList<>();
 
-    public User create(User user) {
+    public User createUser(User user) {
         setNameByLogin(user);
 
         user.setId(generateId());
@@ -23,32 +24,31 @@ public class InMemoryUserStorage implements UserStorage {
         return user;
     }
 
-    public User update(User user) throws ValidationException {
+    public User updateUser(User user) {
         setNameByLogin(user);
-
-        boolean isUserExist = false;
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getId() == user.getId()) {
-                list.set(i, user);
-                isUserExist = true;
-            }
-        }
-
-        if (!isUserExist) throw new ValidationException("Нет пользователя с ID " + user.getId());
+        User userToUpdate = getUserById(user.getId());
+        list.set(list.indexOf(userToUpdate), user);
 
         return user;
     }
 
-    public List<User> read() {
+    public List<User> getUsers() {
         return list;
     }
 
+    public User getUserById(int id) {
+        return list.stream()
+                .filter(user -> user.getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new UserNotFoundException(String.format("Пользователь c id - %s не найден", id)));
+    }
+
     private int generateId() {
-        return ++lastId;
+        return lastId++;
     }
 
     private void setNameByLogin(User user) {
-        if (user.getName() == null) {
+        if (user.getName().isBlank() || user.getName().isEmpty()) {
             log.warn("Имя пустое - будет использован логин");
             user.setName(user.getLogin());
         }
