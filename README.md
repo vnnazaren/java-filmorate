@@ -1,2 +1,8 @@
 # java-filmorate
-Template repository for Filmorate project.
+
+![Схема базы данных:]
+(doc/database/schemaDB.png)
+
+[Скрипты для создания таблиц БД лежат тут:]
+(doc/database/filmorate.sql)
+
