@@ -29,4 +29,6 @@ public class Film {
     private LocalDate releaseDate;
     @Positive(message = "The length of the film must be positive")
     private int duration;
+    private String genre;
+    private String ageRating;
 }

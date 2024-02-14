@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * User.
@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 public class User {
-    private final Set<Integer> friends = new HashSet<>();
+    private final Map<Integer, Boolean> friends = new HashMap<>();
     private Integer id;
     @Email(message = "Email cannot be empty and must contain the @ symbol")
     private String email;
