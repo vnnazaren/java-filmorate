@@ -1,0 +1,60 @@
+DROP TABLE IF EXISTS "age_rating" CASCADE;
+CREATE TABLE IF NOT EXISTS "age_rating"
+(
+    "id"          INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "age_rating"  VARCHAR NOT NULL,
+    "description" VARCHAR
+);
+
+DROP TABLE IF EXISTS "genre" CASCADE;
+CREATE TABLE IF NOT EXISTS "genre"
+(
+    "id"    INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "genre" VARCHAR NOT NULL
+);
+
+DROP TABLE IF EXISTS "user" CASCADE;
+CREATE TABLE IF NOT EXISTS "user"
+(
+    "id"            INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "user_name"     VARCHAR,
+    "user_login"    VARCHAR NOT NULL,
+    "user_email"    VARCHAR,
+    "user_birthday" TIMESTAMP
+);
+
+DROP TABLE IF EXISTS "film" CASCADE;
+CREATE TABLE IF NOT EXISTS "film"
+(
+    "id"           INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "film_name"    VARCHAR NOT NULL,
+    "description"  VARCHAR,
+    "release_date" TIMESTAMP,
+    "duration"     INTEGER,
+    "age_rating"   INTEGER REFERENCES "age_rating"
+);
+
+DROP TABLE IF EXISTS "friendship" CASCADE;
+CREATE TABLE IF NOT EXISTS "friendship"
+(
+    "id"         INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "user"       INTEGER NOT NULL REFERENCES "user",
+    "friend"     INTEGER NOT NULL REFERENCES "user",
+    "is_approve" BOOLEAN NOT NULL DEFAULT false
+);
+
+DROP TABLE IF EXISTS "film_genre" CASCADE;
+CREATE TABLE IF NOT EXISTS "films_genres"
+(
+    "id"    INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "film"  INTEGER NOT NULL REFERENCES "film",
+    "genre" INTEGER NOT NULL REFERENCES "genre"
+);
+
+DROP TABLE IF EXISTS "like" CASCADE;
+CREATE TABLE IF NOT EXISTS "like"
+(
+    "id"   INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    "film" INTEGER NOT NULL REFERENCES "film",
+    "user" INTEGER NOT NULL REFERENCES "user"
+);
