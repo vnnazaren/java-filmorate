@@ -19,6 +19,7 @@ import java.util.Set;
 @AllArgsConstructor
 public class Film {
     private final Set<Integer> likes = new HashSet<>();
+    private final Set<Integer> genres = new HashSet<>();
     private Integer id;
     @NotNull(message = "The name cannot be empty")
     @NotBlank(message = "The name cannot be empty")
@@ -28,7 +29,6 @@ public class Film {
     @AfterDate(value = "1895-12-28", message = "Release date: no earlier than December 28, 1895")
     private LocalDate releaseDate;
     @Positive(message = "The length of the film must be positive")
-    private int duration;
-    private String genre;
+    private Integer duration;
     private String ageRating;
 }

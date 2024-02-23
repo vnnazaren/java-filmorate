@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS "film"
     "description"  VARCHAR,
     "release_date" TIMESTAMP,
     "duration"     INTEGER,
-    "age_rating"   INTEGER REFERENCES "age_rating"
+    "age_rating"   VARCHAR
 );
 
 DROP TABLE IF EXISTS "friendship" CASCADE;
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS "friendship"
 );
 
 DROP TABLE IF EXISTS "film_genre" CASCADE;
-CREATE TABLE IF NOT EXISTS "films_genres"
+CREATE TABLE IF NOT EXISTS "films_genre"
 (
     "id"    INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
     "film"  INTEGER NOT NULL REFERENCES "film",
