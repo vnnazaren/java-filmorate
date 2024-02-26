@@ -8,8 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * User.
@@ -17,7 +15,6 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class User {
-    private final Map<Integer, Boolean> friends = new HashMap<>();
     private Integer id;
     private String name;
     @NotBlank(message = "Login cannot be empty")

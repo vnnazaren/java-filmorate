@@ -1,7 +1,7 @@
 package ru.yandex.practicum.filmorate.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.service.FilmService;
@@ -11,65 +11,61 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@AllArgsConstructor
 @RequestMapping("/films")
 public class FilmController {
     private final FilmService filmService;
-
-    @Autowired
-    public FilmController(FilmService filmService) {
-        this.filmService = filmService;
-    }
 
     /**
      * Создание фильма
      */
     @PostMapping
-    public Film create(@Valid @RequestBody Film film) {
+    public Film createFilm(@Valid @RequestBody Film film) {
         return filmService.createFilm(film);
-    }
-
-    /**
-     * Изменение фильма
-     */
-    @PutMapping
-    public Film update(@Valid @RequestBody Film film) {
-        return filmService.updateFilm(film);
     }
 
     /**
      * Получение всех фильмов
      */
     @GetMapping
-    public List<Film> read() {
-        return filmService.getFilms();
+    public List<Film> readFilms() {
+        return filmService.readFilms();
     }
 
     /**
      * Получение фильма по ID
      */
     @GetMapping("/{id}")
-    public Film getFilm(@PathVariable("id") int id) {
-        return filmService.getFilmById(id);
+    public Film readFilm(@PathVariable("id") int id) {
+        return filmService.readFilm(id);
+    }
+
+    /**
+     * Изменение фильма
+     */
+    @PutMapping
+    public Film updateFilm(@Valid @RequestBody Film film) {
+        return filmService.updateFilm(film);
     }
 
     /**
      * Пользователь ставит лайк фильму
      */
     @PutMapping("/{id}/like/{userId}")
-    public void addLike(
+    public int createLike(
             @PathVariable("id") int id,
             @PathVariable("userId") int userId) {
-        filmService.addLike(id, userId);
+        return filmService.createLike(id, userId);
     }
 
     /**
      * Пользователь удаляет лайк
      */
     @DeleteMapping("/{id}/like/{userId}")
-    public void deleteLike(
+    public int deleteLike(
             @PathVariable("id") int id,
             @PathVariable("userId") int userId) {
-        filmService.deleteLike(id, userId);
+        return filmService.deleteLike(id, userId);
     }
 
     /**
@@ -80,6 +76,6 @@ public class FilmController {
     @GetMapping("/popular")
     public List<Film> getTopFilms(
             @RequestParam(value = "count", defaultValue = "10", required = false) Integer count) {
-        return filmService.getTopFilms(count);
+        return filmService.readTopFilms(count);
     }
 }
