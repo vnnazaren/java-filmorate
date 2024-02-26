@@ -90,12 +90,12 @@ public class UserDbStorage implements UserStorage {
     public User updateUser(User user) {
         String sqlQuery = "update USERS set NAME = ?, LOGIN = ?, EMAIL = ?, BIRTHDAY = ? where ID = ?";
 
-        int resultUpdate = jdbcTemplate.update(sqlQuery
-                , user.getName()
-                , user.getLogin()
-                , user.getEmail()
-                , user.getBirthday()
-                , user.getId());
+        int resultUpdate = jdbcTemplate.update(sqlQuery,
+                user.getName(),
+                user.getLogin(),
+                user.getEmail(),
+                user.getBirthday(),
+                user.getId());
 
         if (resultUpdate <= 0) {
             String warning = "Попытка обновления записи в таблице USERS. Запрос: " + sqlQuery;
