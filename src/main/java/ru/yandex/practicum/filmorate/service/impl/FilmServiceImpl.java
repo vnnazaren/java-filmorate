@@ -37,22 +37,17 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public Film readFilm(int id) {
-        Film film = filmStorage.readFilm(id);
-        film.setMpa(mpaStorage.readMpaByFilmId(film.getId()));
-        film.setGenres(genreStorage.readGenresByFilm(id));
-
-        return film;
+        return filmStorage.readFilm(id);
     }
 
     @Override
     public List<Film> readFilms() {
-        List<Film> films = filmStorage.readFilms();
-        for (Film film : films) {
-            film.setMpa(mpaStorage.readMpaByFilmId(film.getId()));
-            film.setGenres(genreStorage.readGenresByFilm(film.getId()));
-        }
+        return filmStorage.readFilms();
+    }
 
-        return films;
+    @Override
+    public List<Film> readTopFilms(int sizeList) {
+        return filmStorage.readTopFilms(sizeList);
     }
 
     @Override
@@ -85,17 +80,6 @@ public class FilmServiceImpl implements FilmService {
         return likesStorage.deleteLike(filmId, userId);
     }
 
-    @Override
-    public List<Film> readTopFilms(int sizeList) {
-        List<Film> films = filmStorage.readTopFilms(sizeList);
-        for (Film film : films) {
-            film.setMpa(mpaStorage.readMpaByFilmId(film.getId()));
-            film.setGenres(createGenresListByFilm(film));
-        }
-
-        return films;
-    }
-
     private List<Genre> createGenresListByFilm(Film film) {
         List<Genre> result = new ArrayList<>();
 
@@ -106,7 +90,7 @@ public class FilmServiceImpl implements FilmService {
                     .distinct()
                     .collect(Collectors.toList());
             filmsGenresStorage.deleteFilmsGenresByFilmId(film.getId());
-            for (Genre genre : genres) {
+            for (Genre genre : genres) { // todo: Удалить цикл
                 result.add(genreStorage.readGenre(genre.getId()));
                 filmsGenresStorage.createFilmsGenres(film.getId(), genre.getId());
             }

@@ -10,7 +10,7 @@ import ru.yandex.practicum.filmorate.dao.FriendshipsStorage;
 @AllArgsConstructor
 @Repository("friendshipsDbStorage")
 public class FriendshipsDbStorage implements FriendshipsStorage {
-    JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public void createFriend(int userId, int friendId) {

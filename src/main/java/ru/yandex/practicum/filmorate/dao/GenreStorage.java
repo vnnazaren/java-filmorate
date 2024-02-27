@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface GenreStorage {
 
-    List<Genre> readGenresByFilm(Integer filmId);
-
     Genre readGenre(int id);
 
     List<Genre> readGenres();

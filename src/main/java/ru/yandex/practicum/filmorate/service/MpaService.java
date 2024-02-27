@@ -10,4 +10,3 @@ public interface MpaService {
 
     List<Mpa> readAllMpa();
 }
-

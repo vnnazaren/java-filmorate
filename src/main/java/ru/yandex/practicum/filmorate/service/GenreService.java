@@ -10,4 +10,3 @@ public interface GenreService {
 
     List<Genre> readGenres();
 }
-

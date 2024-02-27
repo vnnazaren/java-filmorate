@@ -17,7 +17,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class Film {
-    private List<Genre> genres;
     private Integer id;
     @NotNull(message = "The name cannot be empty")
     @NotBlank(message = "The name cannot be empty")
@@ -29,4 +28,5 @@ public class Film {
     @Positive(message = "The length of the film must be positive")
     private Integer duration;
     private Mpa mpa;
+    private List<Genre> genres;
 }
