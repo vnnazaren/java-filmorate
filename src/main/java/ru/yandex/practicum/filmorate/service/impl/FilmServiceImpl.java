@@ -3,7 +3,10 @@ package ru.yandex.practicum.filmorate.service.impl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.dao.*;
+import ru.yandex.practicum.filmorate.dao.FilmStorage;
+import ru.yandex.practicum.filmorate.dao.FilmsGenresStorage;
+import ru.yandex.practicum.filmorate.dao.LikesStorage;
+import ru.yandex.practicum.filmorate.dao.UserStorage;
 import ru.yandex.practicum.filmorate.exception.IncorrectParameterException;
 import ru.yandex.practicum.filmorate.exception.IncorrectParametersException;
 import ru.yandex.practicum.filmorate.model.Film;
@@ -20,9 +23,7 @@ import java.util.stream.Collectors;
 public class FilmServiceImpl implements FilmService {
     private final FilmStorage filmStorage;
     private final UserStorage userStorage;
-    private final MpaStorage mpaStorage;
     private final LikesStorage likesStorage;
-    private final GenreStorage genreStorage;
     private final FilmsGenresStorage filmsGenresStorage;
 
     @Override
