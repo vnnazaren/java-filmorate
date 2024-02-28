@@ -8,7 +8,5 @@ public interface MpaStorage {
 
     Mpa readMpa(int id);
 
-    Mpa readMpaByFilmId(int id);
-
     List<Mpa> readAllMpa();
 }

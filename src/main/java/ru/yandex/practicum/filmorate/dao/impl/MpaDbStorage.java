@@ -19,16 +19,6 @@ public class MpaDbStorage implements MpaStorage {
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public Mpa readMpaByFilmId(int id) {
-        String sqlQuery = "select mpa.ID, mpa.NAME " +
-                "from MPA as mpa " +
-                "right join FILMS as f on mpa.id = f.MPA " +
-                "where f.ID = ?";
-
-        return jdbcTemplate.queryForObject(sqlQuery, this::mapRowToMpa, id);
-    }
-
-    @Override
     public Mpa readMpa(int id) {
         Mpa mpa;
         String sqlQuery = "select ID, NAME " +
