@@ -10,7 +10,6 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,8 +28,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public Film createFilm(Film film) {
         Film createdFilm = filmStorage.createFilm(film);
-        createdFilm.setMpa(mpaStorage.readMpa(film.getMpa().getId()));
-        createdFilm.setGenres(createGenresListByFilm(film));
+        createdFilm.setGenres(createGenresListByFilm(createdFilm));
 
         return createdFilm;
     }
@@ -56,8 +54,7 @@ public class FilmServiceImpl implements FilmService {
             throw new IncorrectParameterException("id");
 
         Film updatedFilm = filmStorage.updateFilm(film);
-        updatedFilm.setMpa(mpaStorage.readMpa(film.getMpa().getId()));
-        updatedFilm.setGenres(createGenresListByFilm(film));
+        updatedFilm.setGenres(createGenresListByFilm(updatedFilm));
 
         return updatedFilm;
     }
@@ -81,21 +78,16 @@ public class FilmServiceImpl implements FilmService {
     }
 
     private List<Genre> createGenresListByFilm(Film film) {
-        List<Genre> result = new ArrayList<>();
-
+        filmsGenresStorage.deleteFilmsGenresByFilmId(film.getId());
         List<Genre> genres = film.getGenres();
         if (genres != null) {
             genres = genres.stream()
                     .sorted(Comparator.comparingInt(Genre::getId))
                     .distinct()
                     .collect(Collectors.toList());
-            filmsGenresStorage.deleteFilmsGenresByFilmId(film.getId());
-            for (Genre genre : genres) { // todo: Удалить цикл
-                result.add(genreStorage.readGenre(genre.getId()));
-                filmsGenresStorage.createFilmsGenres(film.getId(), genre.getId());
-            }
         }
-
-        return result;
+        film.setGenres(genres);
+        filmsGenresStorage.createFilmsGenres(film);
+        return genres;
     }
 }

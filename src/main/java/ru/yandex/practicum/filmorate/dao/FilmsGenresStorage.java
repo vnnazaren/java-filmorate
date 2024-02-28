@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.dao;
 
+import ru.yandex.practicum.filmorate.model.Film;
+
 public interface FilmsGenresStorage {
 
-    void createFilmsGenres(Integer filmId, Integer genreId);
+    void createFilmsGenres(Film film);
 
     void deleteFilmsGenresByFilmId(Integer filmId);
 }
