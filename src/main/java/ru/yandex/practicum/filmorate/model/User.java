@@ -8,8 +8,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * User.
@@ -17,14 +15,13 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 public class User {
-    private final Map<Integer, Boolean> friends = new HashMap<>();
     private Integer id;
-    @Email(message = "Email cannot be empty and must contain the @ symbol")
-    private String email;
+    private String name;
     @NotBlank(message = "Login cannot be empty")
     @Pattern(regexp = "^\\S+$", message = "Login cannot contain spaces")
     private String login;
-    private String name;
+    @Email(message = "Email cannot be empty and must contain the @ symbol")
+    private String email;
     @PastOrPresent(message = "The date of birth cannot be in the future")
     private LocalDate birthday;
 }

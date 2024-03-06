@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import ru.yandex.practicum.filmorate.annotation.AfterDate;
 
@@ -9,16 +10,15 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Film.
  */
 @Data
+@Builder
 @AllArgsConstructor
 public class Film {
-    private final Set<Integer> likes = new HashSet<>();
     private Integer id;
     @NotNull(message = "The name cannot be empty")
     @NotBlank(message = "The name cannot be empty")
@@ -28,7 +28,7 @@ public class Film {
     @AfterDate(value = "1895-12-28", message = "Release date: no earlier than December 28, 1895")
     private LocalDate releaseDate;
     @Positive(message = "The length of the film must be positive")
-    private int duration;
-    private String genre;
-    private String ageRating;
+    private Integer duration;
+    private Mpa mpa;
+    private List<Genre> genres;
 }
